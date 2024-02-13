@@ -1,0 +1,10 @@
+pluginManagement {
+    repositories {
+        maven { url = "https://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'caramel'
