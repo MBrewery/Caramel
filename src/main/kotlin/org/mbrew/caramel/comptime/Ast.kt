@@ -4,9 +4,9 @@ sealed interface Node
 
 class ModuleRoot(
     val imports: List<String>,
-    val topLevelVars: Map<String, VarDeclStmt>,
-    val funcs: Map<String, FuncDecl>,
-    val types: Map<String, TypeDecl>
+    val topLevelVars: List<VarDeclStmt>,
+    val funcs: List<FuncDecl>,
+    val types: List<TypeDecl>
 ) : Node
 
 class FuncDecl(
@@ -17,7 +17,7 @@ class FuncDecl(
 
 class TypeDecl(
     val name: String,
-    val fields: Map<String, VarDeclStmt>,
+    val fields: List<VarDeclStmt>,
 ) : Node
 
 // ---------------- Statements ---------------- //
@@ -55,7 +55,7 @@ class ExprStmt(
 class IfStmt(
     val cond: Expr,
     val thenBlock: Stmt,
-    val elseBlock: Stmt? = null,
+    val elseBlock: Stmt?,
 ) : Stmt
 
 class WhileStmt(
@@ -67,7 +67,7 @@ class ForRangeStmt(
     val iteratorName: String,
     val start: Expr,
     val end: Expr,
-    val step: Expr,
+    val step: Expr?,
     val block: Stmt,
 ) : Stmt
 
@@ -82,6 +82,21 @@ data object ContinueStmt : Stmt
 
 class ReturnStmt(
     val expr: Expr? = null,
+) : Stmt {
+    companion object {
+        @JvmStatic
+        val NoReturn = ReturnStmt(null)
+    }
+}
+
+class ThrowStmt(
+    val expr: Expr,
+) : Stmt
+
+class TryStmt(
+    val tryBlock: Stmt,
+    val catchBlock: Stmt?,
+    val finallyBlock: Stmt?,
 ) : Stmt
 
 // ---------------- Expressions ---------------- //
@@ -110,13 +125,13 @@ class CallExpr(
 ): Expr()
 
 class BinaryExpr(
-    val op: TokenTypes,
+    val op: TokenType,
     val lhs: Expr,
     val rhs: Expr,
 ): Expr()
 
 class UnaryExpr(
-    val op: TokenTypes,
+    val op: TokenType,
     val expr: Expr,
 ): Expr()
 

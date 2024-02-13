@@ -7,7 +7,7 @@ class TypeChecker(val task: CompileTask) {
     val ast by lazy { task.ast }
 
     fun check() {
-        for (v in ast.topLevelVars) checkLetStmt(v.value)
+        for (v in ast.topLevelVars) checkLetStmt(v)
     }
 
     fun checkLetStmt(stmt: VarDeclStmt) {

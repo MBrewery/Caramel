@@ -23,7 +23,7 @@ object Tests {
             }
             let f = compile formula "3 ^ 2 + 2"
             print (execute f)
-            return 0
+            return execute f
         }
         
     """.trimIndent()
@@ -31,5 +31,6 @@ object Tests {
     @Test
     fun test() {
         val task = CompileTask(src, CompileEnv())
+        task.ast
     }
 }

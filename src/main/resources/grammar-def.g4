@@ -20,15 +20,16 @@ stmt
 |  'for' Word 'in' expr block  // foreach
 |  'break' EOS
 |  'continue' EOS
-|  'return' expr? EOS
+|  'return' call? EOS
 |  'let' Word (':' typeId)? '=' call EOS // var decl
+|  assign EOS // assignment
 |  call EOS // expression statement, value ignored
 
 assign: assignableExpr '=' call
-assignableExpr: postfixExpr ('.' Word | '[' call ']') | Word
+assignableExpr: postfixExpr ('.' Word | '[' call ']')
 
 call: (expr | word)+ // at least 1 word. expr alone is not a call
-primary: '(' expr ')' | varName | StringLit | NumberLit | BooleanLit | NullLit | lambdaLit
+primary: '(' call ')' | varName | StringLit | NumberLit | BooleanLit | NullLit | lambdaLit
 expr
 :  primary
 |  expr ('.' Word | '[' call ']') // postfix operators

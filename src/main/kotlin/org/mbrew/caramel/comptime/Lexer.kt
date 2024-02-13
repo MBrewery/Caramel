@@ -204,6 +204,12 @@ class Lexer(task: CompileTask) {
                             result += CommonTokens.EOS
                         }
                         ' ', '\t' -> skip()
+                        '\\' -> {
+                            skip()
+                            if(hasMore() && src[offset] == '\n') {
+                                skip()
+                            } else throw RuntimeException("Unexpected character: $ch")
+                        }
                         else -> throw RuntimeException("Unexpected character: $ch")
                     }
                 }
